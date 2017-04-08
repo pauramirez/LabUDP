@@ -1,6 +1,7 @@
 package Servidor;
 
 import java.io.IOException;
+import java.io.PrintStream;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.Inet4Address;
@@ -38,6 +39,8 @@ public class Servidor {
 			int clientPort = recievePacket.getPort();
 			String message = new String(recievePacket.getData());
 			
+			procesarClientes(serverSocket);
+			
 			//Se debe recortar el mensaje con el fin de quitarle los bytes vacios 
 			message = message.trim();
 			System.out.println("[UDP SERVER] El mensaje {" + message + "}. \n ");
@@ -53,4 +56,11 @@ public class Servidor {
 		}
 		
 	}
+	
+	public static void procesarClientes(DatagramSocket socket)throws IOException
+	{
+		System.out.println("Procesando los pedidos entrantes");
+//		PrintStream printStream = new PrintStream(socket);
+	}
+	
 }

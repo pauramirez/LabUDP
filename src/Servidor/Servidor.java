@@ -1,18 +1,26 @@
 package Servidor;
 
+import java.awt.List;
+import java.io.File;
 import java.io.IOException;
 import java.io.PrintStream;
+import java.io.PrintWriter;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.Inet4Address;
 import java.net.InetAddress;
 
+import javafx.scene.text.Text;
+
 public class Servidor {
+	
+	public static boolean listening;
 
 	public static void main(String args[])throws IOException
 	{
 		System.out.println("/**********************************************************/\n "
 				+ "UDP SERVER INITIALIZING \n /**********************************************************/");
+		listening = true;
 		
 		//Declaracion del socket UDP
 		DatagramSocket serverSocket = null;
@@ -28,7 +36,7 @@ public class Servidor {
 		byte[] recievedData = new byte[dataLength]; //buffer del servidor
 		DatagramPacket recievePacket = new DatagramPacket(recievedData, recievedData.length);
 		
-		while(true)
+		while(listening )
 		{
 			//Esperar por los paquetes entrantes 
 			System.out.println("Esperando por la llegada de nuevos mensajes por el puerto " + port +"...");
@@ -41,9 +49,15 @@ public class Servidor {
 			
 			procesarClientes(serverSocket);
 			
+			//Se crea el archivo de texto del cliente
+			List clientText = new List();
+			File arch = new File("Cliente del puerto " + clientPort + " con informacion " + clientText);
+			arch.setWritable(true);
+			
 			//Se debe recortar el mensaje con el fin de quitarle los bytes vacios 
 			message = message.trim();
 			System.out.println("[UDP SERVER] El mensaje {" + message + "}. \n ");
+			clientText.add(message);
 			
 			//enviar la respuesta al cliente
 			byte[] sendData =new byte[1024];
@@ -53,6 +67,7 @@ public class Servidor {
 			DatagramPacket sendPacket = new DatagramPacket(sendData, sendData.length, IPAdress, clientPort);
 			serverSocket.send(sendPacket);
 			
+			
 		}
 		
 	}
@@ -60,7 +75,7 @@ public class Servidor {
 	public static void procesarClientes(DatagramSocket socket)throws IOException
 	{
 		System.out.println("Procesando los pedidos entrantes");
-//		PrintStream printStream = new PrintStream(socket);
+		
 	}
 	
 }

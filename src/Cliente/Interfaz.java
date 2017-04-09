@@ -3,6 +3,7 @@ package Cliente;
 import java.awt.Dimension;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
+import java.io.IOException;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -27,6 +28,7 @@ public class Interfaz  extends JFrame implements WindowListener
 	public Interfaz()
 	{
 		setSize(new Dimension(301, 233));
+		client = new Cliente();
 		getContentPane().setLayout(null);
 		
 		JPanel panel = new JPanel();
@@ -74,6 +76,12 @@ public class Interfaz  extends JFrame implements WindowListener
 				client.setServerIP(textFIP.getText());
 				client.setPort(Integer.parseInt(textFPuerto.getText()));
 				client.setNumObjetos(Integer.parseInt(textFObjetos.getText()));
+				try {
+					client.start();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
 		});
 		btnEnviar.setFont(new Font("Times New Roman", Font.PLAIN, 14));

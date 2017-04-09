@@ -1,19 +1,9 @@
 package Cliente;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
-import java.net.Inet4Address;
 import java.net.InetAddress;
-import java.net.Socket;
-import java.net.UnknownHostException;
-import java.time.LocalDateTime;
-import java.time.format.FormatStyle;
-
-import com.sun.imageio.plugins.common.InputStreamAdapter;
 
 import javafx.util.converter.LocalDateTimeStringConverter;
 
@@ -24,11 +14,15 @@ public class Cliente {
 	private static int numObjetos;
 	private static int seqNumber;
 
-	public Cliente(){
-
+	public Cliente()
+	{
+		this.seqNumber = 0;
+		this.serverIP = "";
+		this.port = 0;
+		this.numObjetos = 0;
 	}
 
-	public static void main(String args[]) throws IOException
+	public static void start() throws IOException
 	{
 		System.out.println("/**********************************************************/\n "
 				+ "UDP CLIENT INITIALIZING \n /**********************************************************/");
@@ -66,10 +60,14 @@ public class Cliente {
 		DatagramPacket sendPacket = new DatagramPacket(sendData, sendData.length, serverIPAdress, serverPortNumber);
 		while(numObjetos>0)
 		{
+			System.out.println("Enviando " + numObjetos + " objetos");
 			clientSocket.send(sendPacket);
+			seqNumber ++;
+			numObjetos --;
+			System.out.println("Restan por enviar " + numObjetos);
 		}
 
-		seqNumber ++;
+		
 	}
 
 	public static String getServerIP() {

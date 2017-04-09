@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
+import java.sql.Time;
+import java.time.LocalDateTime;
 
 import javafx.util.converter.LocalDateTimeStringConverter;
 
@@ -49,20 +51,23 @@ public class Cliente {
 		String nombre = "Arci";
 
 		//Preparar el mensaje que se va a enviar
-		LocalDateTimeStringConverter tSent = new LocalDateTimeStringConverter();
+		Long tSent = System.currentTimeMillis();
 		String message = "Hola soy " + nombre + " desde el host " + InetAddress.getLocalHost()
-		+ "marca de tiempo " + tSent + " y numero de secuencia " + seqNumber;
+		+ "marca de tiempo " + tSent.toString() + " y numero de secuencia " + seqNumber;
 
 		//Preparar el buffer para enviar el mensaje
 		byte[] sendData = new byte[message.length()*8];
 		sendData = message.getBytes();
 
 		DatagramPacket sendPacket = new DatagramPacket(sendData, sendData.length, serverIPAdress, serverPortNumber);
+		int actual = 1;
 		while(numObjetos>0)
 		{
-			System.out.println("Enviando " + numObjetos + " objetos");
+			System.out.println("Enviando objeto numero " + actual + " con estampa de tiempo " 
+		+ tSent.toString() + " con numero de secuencia " + seqNumber);
 			clientSocket.send(sendPacket);
 			seqNumber ++;
+			actual ++;
 			numObjetos --;
 			System.out.println("Restan por enviar " + numObjetos);
 		}
@@ -93,8 +98,4 @@ public class Cliente {
 	public static void setNumObjetos(int numObjetos) {
 		Cliente.numObjetos = numObjetos;
 	}
-
-
-
-
 }

@@ -1,6 +1,7 @@
 package Servidor;
 
-import java.awt.List;
+import java.util.LinkedList;
+import java.util.List;
 import java.io.File;
 import java.io.IOException;
 import java.net.DatagramPacket;
@@ -38,7 +39,7 @@ public class Server extends Thread
 			procesarClientes(socket);
 			
 			//Se crea el archivo de texto del cliente
-			List clientText = new List();
+			List clientText = new LinkedList<String>();
 			File arch = new File("Cliente del puerto " + clientPort + " con informacion " + clientText);
 			arch.setWritable(true);
 			

@@ -4,10 +4,6 @@ import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
-import java.sql.Time;
-import java.time.LocalDateTime;
-
-import javafx.util.converter.LocalDateTimeStringConverter;
 
 public class Cliente {
 

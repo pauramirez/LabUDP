@@ -26,8 +26,8 @@ public class Cliente {
 
 	public static void start() throws IOException
 	{
-		System.out.println("/**********************************************************/\n "
-				+ "UDP CLIENT INITIALIZING \n /**********************************************************/");
+		System.out.println("/********/\n "
+				+ "UDP CLIENT INITIALIZING \n /********/");
 
 		//Crear el host name del server
 		String severHostName = serverIP;
@@ -52,8 +52,8 @@ public class Cliente {
 
 		//Preparar el mensaje que se va a enviar
 		Long tSent = System.currentTimeMillis();
-		String message = "Hola soy " + nombre + " desde el host " + InetAddress.getLocalHost()
-		+ "marca de tiempo " + tSent.toString() + " y numero de secuencia " + seqNumber;
+		String message = ""+numObjetos+",Hola soy " + nombre + " desde el host " + InetAddress.getLocalHost()
+		+ " marca de tiempo " + tSent.toString() + " y numero de secuencia " + seqNumber;
 
 		//Preparar el buffer para enviar el mensaje
 		byte[] sendData = new byte[message.length()*8];

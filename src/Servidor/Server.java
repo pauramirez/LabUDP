@@ -6,7 +6,6 @@ import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
-import java.net.Socket;
 
 
 public class Server extends Thread
@@ -28,7 +27,6 @@ public class Server extends Thread
 		
 		while(true)
 		{
-			//Esperar por los paquetes entrantes 
 			
 			socket.receive(recievePacket);
 			
@@ -46,25 +44,26 @@ public class Server extends Thread
 			
 			//Se debe recortar el mensaje con el fin de quitarle los bytes vacios 
 			message = message.trim();
-                        while(!message.equals(null))
+                        String[] mensaje = message.split(",");
+                        int mens = Integer.parseInt(mensaje[0]);
+                        while(mens>0)
                         {
-                            System.out.println("[UDP SERVER] El mensaje {" + message + "}. \n ");
-                            clientText.add(message);  
-                            
+                            System.out.println("[UDP SERVER] El mensaje {" + mensaje[1] + "}. \n ");
+                            clientText.add(mensaje[1]);  
+
                             byte[] sendData =new byte[1024];
                             String responseMessage = "Mensaje del cliente recibido";
                             sendData = responseMessage.getBytes();
 
                             DatagramPacket sendPacket = new DatagramPacket(sendData, sendData.length, IPAdress, clientPort);
-                            socket.send(sendPacket);  
+                            socket.send(sendPacket);
+                            mens--;
                         }
-			
-			//enviar la respuesta al cliente			
-		}
+                }
             }
         catch (Exception e)
         {
-            
+          e.printStackTrace();  
         }
     }
 	
